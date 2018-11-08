@@ -1,0 +1,22 @@
+{
+  "name": "nodejs-workshops",
+  "version": "1.0.0",
+  "description": "node + mongodb basic setup",
+  "main": "server.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/PGS-dev/nodejs-workshop.git"
+  },
+  "author": "Łukasz Kochajewski",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/PGS-dev/nodejs-workshop/issues"
+  },
+  "homepage": "https://github.com/PGS-dev/nodejs-workshopS#readme",
+  "devDependencies": {
+    "express": "^4.16.3"
+  }
+}
