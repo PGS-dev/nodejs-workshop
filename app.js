@@ -2,6 +2,14 @@ const express = require('express')
 const app = express()
 const morgan = require('morgan')
 const bodyParser = require('body-parser')
+const mongoose = require('mongoose')
+const config = require('./config/db')
+
+mongoose.connect(config.database, { useNewUrlParser: true })
+
+mongoose.connection.on('connected', () => {
+    console.log('Connected to the database')
+})
 
 // Routes
 const productsRoutes = require('./api/routes/products')
