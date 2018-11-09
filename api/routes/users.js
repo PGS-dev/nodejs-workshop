@@ -4,7 +4,7 @@ const UsersController = require('../controllers/users')
 
 router.get('/', UsersController.getUsers)
 
-router.post('/singup', UsersController.signup)
+router.post('/signup', UsersController.signup)
 
 router.get('/:userId', UsersController.getUserById)
 
