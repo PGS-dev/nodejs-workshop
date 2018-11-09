@@ -1,6 +1,33 @@
 const express = require('express')
 const router = express.Router()
 const Product = require('../models/products')
+const multer = require('multer')
+
+// disk storage strategy
+const storage = multer.diskStorage({
+    destination: function(req, file, cb) {
+        cb(null, './uploads/')
+    },
+    filename: function(req, file, cb) {
+        cb(null, `${Date.now()}-${file.originalname}`)
+    }
+})
+
+// filter by image mimetype
+const fileFilter = (req, file, cb) => {
+    if (file.mimetype === 'image/jpeg') {
+        cb(null, true)
+    } else {
+        cb(new Error('File has wrong format. It should be in jpeg format'))
+    }
+}
+
+// init middleware configuration
+const upload = multer({
+    storage,
+    limits: { filesize: 1024 * 1025 * 5 },
+    fileFilter
+})
 
 router.get('/', async (req, res, next) => {
     try {
@@ -13,10 +40,12 @@ router.get('/', async (req, res, next) => {
     }
 })
 
-router.post('/', async (req, res, next) => {
+router.post('/', upload.single('productImage'), async (req, res, next) => {
+    let imgPath = req.file ? req.file.path : null
     let product = new Product({
         name: req.body.name,
-        price: req.body.price
+        price: req.body.price,
+        imgPath
     })
 
     try {
@@ -36,7 +65,7 @@ router.get('/:productId', async (req, res, next) => {
 
     try {
         let product = await Product.findById(id)
-            .select('__id name price isAvailable')
+            .select('__id name price isAvailable imgPath')
             .exec()
         if (product) {
             res.status(200).json(product)

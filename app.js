@@ -5,7 +5,10 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const config = require('./config/db')
 
-mongoose.connect(config.database, { useNewUrlParser: true })
+mongoose.connect(
+    config.database,
+    { useNewUrlParser: true }
+)
 
 mongoose.connection.on('connected', () => {
     console.log('Connected to the database')
@@ -20,6 +23,7 @@ const usersRoutes = require('./api/routes/users')
 app.use(morgan('dev'))
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.use('/uploads', express.static('uploads'))
 
 // handling CORS
 app.use((req, res, next) => {
@@ -51,8 +55,8 @@ app.use((error, req, res, next) => {
     res.status(error.status || 500)
     res.json({
         error: {
-            message: error.message,
-        },
+            message: error.message
+        }
     })
 })
 
