@@ -12,7 +12,8 @@ const productSchema = mongoose.Schema({
     isAvailable: {
         type: Boolean,
         default: true
-    }
+    },
+    imgPath: String
 })
 
 module.exports = mongoose.model('Product', productSchema)
