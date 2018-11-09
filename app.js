@@ -5,6 +5,8 @@ const bodyParser = require('body-parser')
 const mongoose = require('mongoose')
 const config = require('./config/db')
 
+mongoose.set('useCreateIndex', true)
+
 mongoose.connect(
     config.database,
     { useNewUrlParser: true }
